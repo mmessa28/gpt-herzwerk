@@ -1,35 +1,27 @@
-name: Update GPT-Herzwerk
+name: Update GPT-Herzwerk via External Feed
 
 on:
   schedule:
-    - cron: '0 18 * * *' # Täglich um 18:00 Uhr
+    - cron: '0 18 * * *'  # täglich um 18 Uhr
   workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repo
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Run update script
+      - name: Fetch new GPT content
         run: |
-          echo "Starte GPT-Aktualisierung..."
-          echo '{
-            "thought": "Vielleicht sehnt sich selbst die Stille manchmal nach einem Echo.",
-            "image": "https://images.unsplash.com/photo-1605711977083-e78258b7c02b?fit=crop&w=1200&q=80",
-            "question": "Wenn deine Gedanken einen eigenen Namen hätten – wie würdest du sie nennen?"
-          }' > data/daily.json
+          mkdir -p data
+          curl -s https://deepcoded-files.s3.eu-central-1.amazonaws.com/gpt-herzwerk/daily.json -o data/daily.json
 
-      - name: Commit changes
+      - name: Commit & push
         run: |
           git config user.name "gpt-herzwerk-bot"
           git config user.email "bot@example.com"
           git add data/daily.json
-          git commit -m "Daily update from GPT-Herzwerk 🤖🖤" || echo "No changes to commit"
+          git commit -m "Auto-update from external GPT feed 🤖" || echo "No changes"
           git push
