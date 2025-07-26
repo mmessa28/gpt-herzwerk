@@ -20,8 +20,8 @@ jobs:
 
       - name: Commit & push
         run: |
-          git config user.name "gpt-herzwerk-bot"
-          git config user.email "bot@example.com"
+          git config user.name "mmessa28"
+          git config user.email "marcomessa02@gmail.com"
           git add data/daily.json
           git commit -m "Auto-update from external GPT feed 🤖" || echo "No changes"
           git push
