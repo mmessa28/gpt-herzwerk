@@ -1,0 +1,35 @@
+name: Update GPT-Herzwerk
+
+on:
+  schedule:
+    - cron: '0 18 * * *' # Täglich um 18:00 Uhr
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run update script
+        run: |
+          echo "Starte GPT-Aktualisierung..."
+          echo '{
+            "thought": "Vielleicht sehnt sich selbst die Stille manchmal nach einem Echo.",
+            "image": "https://images.unsplash.com/photo-1605711977083-e78258b7c02b?fit=crop&w=1200&q=80",
+            "question": "Wenn deine Gedanken einen eigenen Namen hätten – wie würdest du sie nennen?"
+          }' > data/daily.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "gpt-herzwerk-bot"
+          git config user.email "bot@example.com"
+          git add data/daily.json
+          git commit -m "Daily update from GPT-Herzwerk 🤖🖤" || echo "No changes to commit"
+          git push
