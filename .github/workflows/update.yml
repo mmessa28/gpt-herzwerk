@@ -16,7 +16,7 @@ jobs:
       - name: Fetch new GPT content
         run: |
           mkdir -p data
-          curl -s https://deepcoded-files.s3.eu-central-1.amazonaws.com/gpt-herzwerk/daily.json -o data/daily.json
+          curl -s https://herzwerk-feed.s3.eu-central-1.amazonaws.com/daily.json -o data/daily.json
 
       - name: Commit & push
         run: |
