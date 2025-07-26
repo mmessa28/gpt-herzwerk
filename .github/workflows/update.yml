@@ -16,8 +16,7 @@ jobs:
       - name: Fetch new GPT content
         run: |
           mkdir -p data
-          curl -L -s https://herzwerk-feed.s3.eu-central-1.amazonaws.com/daily.json -o data/daily.json
-
+          curl -L -s https://gpt-live-feed.s3.eu-central-1.amazonaws.com/daily.json
       - name: Commit & push
         run: |
           git config user.name "mmessa28"
